@@ -18,6 +18,7 @@ export async function createPaymentHeader(
   x402Version: number,
   paymentRequirements: PaymentRequirements,
   config?: X402Config,
+  extensions?: Record<string, any>,
 ): Promise<string> {
   // exact scheme
   if (paymentRequirements.scheme === "exact") {
@@ -33,6 +34,7 @@ export async function createPaymentHeader(
         evmClient,
         x402Version,
         paymentRequirements,
+        extensions,
       );
     }
     // svm

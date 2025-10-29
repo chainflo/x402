@@ -16,6 +16,7 @@ export function preparePaymentHeader(
   from: Address,
   x402Version: number,
   paymentRequirements: PaymentRequirements,
+  extensions?: Record<string, any>,
 ): UnsignedPaymentPayload {
   const nonce = createNonce();
 
@@ -41,6 +42,7 @@ export function preparePaymentHeader(
         nonce,
       },
     },
+    extensions,
   };
 }
 
@@ -84,9 +86,10 @@ export async function createPayment<transport extends Transport, chain extends C
   client: SignerWallet<chain, transport> | LocalAccount,
   x402Version: number,
   paymentRequirements: PaymentRequirements,
+  extensions?: Record<string, any>,
 ): Promise<PaymentPayload> {
   const from = isSignerWallet(client) ? client.account!.address : client.address;
-  const unsignedPaymentHeader = preparePaymentHeader(from, x402Version, paymentRequirements);
+  const unsignedPaymentHeader = preparePaymentHeader(from, x402Version, paymentRequirements, extensions);
   return signPaymentHeader(client, paymentRequirements, unsignedPaymentHeader);
 }
 
@@ -102,7 +105,8 @@ export async function createPaymentHeader(
   client: SignerWallet | LocalAccount,
   x402Version: number,
   paymentRequirements: PaymentRequirements,
+  extensions?: Record<string, any>,
 ): Promise<string> {
-  const payment = await createPayment(client, x402Version, paymentRequirements);
+  const payment = await createPayment(client, x402Version, paymentRequirements, extensions);
   return encodePayment(payment);
 }

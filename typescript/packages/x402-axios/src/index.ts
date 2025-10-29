@@ -74,9 +74,10 @@ export function withPaymentInterceptor(
           return Promise.reject(error);
         }
 
-        const { x402Version, accepts } = error.response.data as {
+        const { x402Version, accepts, extensions } = error.response.data as {
           x402Version: number;
           accepts: PaymentRequirements[];
+          extensions?: Record<string, any>;
         };
         const parsed = accepts.map(x => PaymentRequirementsSchema.parse(x));
 
@@ -94,6 +95,7 @@ export function withPaymentInterceptor(
           x402Version,
           selectedPaymentRequirements,
           config,
+          extensions,
         );
 
         (originalConfig as { __is402Retry?: boolean }).__is402Retry = true;
