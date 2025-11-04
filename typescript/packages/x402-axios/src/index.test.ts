@@ -6,11 +6,11 @@ import {
   InternalAxiosRequestConfig,
 } from "axios";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { evm, PaymentRequirements, ChainIdToNetwork, Signer, MultiNetworkSigner } from "x402/types";
+import { evm, PaymentRequirements, ChainIdToNetwork, Signer, MultiNetworkSigner } from "@chainflo/x402/types";
 import { withPaymentInterceptor } from "./index";
 
 // Mock the createPaymentHeader function
-vi.mock("x402/client", () => ({
+vi.mock("@chainflo/x402/client", () => ({
   createPaymentHeader: vi.fn(),
   selectPaymentRequirements: vi.fn(),
 }));

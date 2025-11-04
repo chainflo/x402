@@ -4,7 +4,7 @@ const baseConfig = {
   entry: {
     index: "src/index.ts",
   },
-  dts: false,
+  dts: true,
   sourcemap: true,
   target: "node16",
 };
